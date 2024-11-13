@@ -35,7 +35,7 @@
     </build>
 
     <modules>
-        <module>user</module>
+        <module>auth</module>
         <module>product</module>
         <module>notification</module>
         <module>order</module>
