@@ -1,7 +1,7 @@
 package com.flatrock.delivery.config;
 
 import com.flatrock.common.jwt.JWTConfigurer;
-import com.flatrock.common.jwt.TokenProvider;
+import com.flatrock.common.jwt.TokenManager;
 import com.flatrock.common.security.AuthoritiesConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-    private final TokenProvider tokenProvider;
+    private final TokenManager tokenManager;
 
-    public SecurityConfiguration(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
+    public SecurityConfiguration(TokenManager tokenManager) {
+        this.tokenManager = tokenManager;
     }
 
     @Bean
@@ -51,6 +51,6 @@ public class SecurityConfiguration {
     }
 
     private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+        return new JWTConfigurer(tokenManager);
     }
 }

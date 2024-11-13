@@ -1,13 +1,12 @@
 package com.flatrock.notification.config;
 
 import com.flatrock.common.jwt.JwtInterceptor;
-import com.flatrock.common.jwt.TokenProvider;
+import com.flatrock.common.jwt.TokenManager;
 import com.flatrock.common.security.ServiceEnum;
 import com.flatrock.notification.rest.UserServiceClient;
 import feign.Contract;
 import feign.Feign;
 import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,14 +23,14 @@ public class WebConfigurer implements ServletContextInitializer {
 
     private final Environment env;
 
-    private final TokenProvider tokenProvider;
+    private final TokenManager tokenManager;
 
     @Value("${application.services.user}")
     private String userService;
 
-    public WebConfigurer(Environment env, TokenProvider tokenProvider) {
+    public WebConfigurer(Environment env, TokenManager tokenManager) {
         this.env = env;
-        this.tokenProvider = tokenProvider;
+        this.tokenManager = tokenManager;
     }
 
     @Override
@@ -46,7 +45,7 @@ public class WebConfigurer implements ServletContextInitializer {
 
     @Bean
     public JwtInterceptor jwtInterceptor() {
-        return new JwtInterceptor(tokenProvider, ServiceEnum.NOTIFICATION_SERVICE);
+        return new JwtInterceptor(tokenManager, ServiceEnum.NOTIFICATION_SERVICE);
     }
 
     @Bean

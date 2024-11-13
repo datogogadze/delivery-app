@@ -29,9 +29,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
-public class TokenProvider {
+public class TokenManager {
 
-    private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
+    private final Logger log = LoggerFactory.getLogger(TokenManager.class);
 
     private static final String AUTHORITIES_KEY = "auth";
 
@@ -45,7 +45,7 @@ public class TokenProvider {
 
     private final Map<ServiceEnum, String> tokenCache = new ConcurrentHashMap<>();
 
-    public TokenProvider(AppProperties properties) {
+    public TokenManager(AppProperties properties) {
         byte[] keyBytes;
         String secret = properties.getSecurity().getAuthentication().getJwt().getBase64Secret();
         if (!ObjectUtils.isEmpty(secret)) {

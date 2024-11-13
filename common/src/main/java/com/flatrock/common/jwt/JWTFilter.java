@@ -16,10 +16,10 @@ public class JWTFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private final TokenProvider tokenProvider;
+    private final TokenManager tokenManager;
 
-    public JWTFilter(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
+    public JWTFilter(TokenManager tokenManager) {
+        this.tokenManager = tokenManager;
     }
 
     @Override
@@ -27,8 +27,8 @@ public class JWTFilter extends GenericFilterBean {
         throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String jwt = resolveToken(httpServletRequest);
-        if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
-            Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+        if (StringUtils.hasText(jwt) && this.tokenManager.validateToken(jwt)) {
+            Authentication authentication = this.tokenManager.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(servletRequest, servletResponse);

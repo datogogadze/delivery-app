@@ -1,7 +1,7 @@
 package com.flatrock.user.config;
 
 import com.flatrock.common.jwt.JWTConfigurer;
-import com.flatrock.common.jwt.TokenProvider;
+import com.flatrock.common.jwt.TokenManager;
 import com.flatrock.common.security.AuthoritiesConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,15 +20,15 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class SecurityConfiguration {
 
-    private final TokenProvider tokenProvider;
+    private final TokenManager tokenManager;
 
     private final CorsFilter corsFilter;
 
     public SecurityConfiguration(
-        TokenProvider tokenProvider,
+        TokenManager tokenManager,
         CorsFilter corsFilter
     ) {
-        this.tokenProvider = tokenProvider;
+        this.tokenManager = tokenManager;
         this.corsFilter = corsFilter;
     }
 
@@ -63,6 +63,6 @@ public class SecurityConfiguration {
     }
 
     private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+        return new JWTConfigurer(tokenManager);
     }
 }

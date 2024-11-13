@@ -2,7 +2,7 @@ package com.flatrock.user.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flatrock.common.jwt.JWTFilter;
-import com.flatrock.common.jwt.TokenProvider;
+import com.flatrock.common.jwt.TokenManager;
 import com.flatrock.user.controller.model.LoginVM;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,12 +25,12 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 public class UserJWTController {
 
-    private final TokenProvider tokenProvider;
+    private final TokenManager tokenManager;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.tokenProvider = tokenProvider;
+    public UserJWTController(TokenManager tokenManager, AuthenticationManagerBuilder authenticationManagerBuilder) {
+        this.tokenManager = tokenManager;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
@@ -43,7 +43,7 @@ public class UserJWTController {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.createToken(authentication);
+        String jwt = tokenManager.createToken(authentication);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);

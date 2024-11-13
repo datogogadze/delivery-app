@@ -6,18 +6,18 @@ import feign.RequestTemplate;
 import org.springframework.util.StringUtils;
 
 public class JwtInterceptor implements RequestInterceptor {
-    private final TokenProvider tokenProvider;
+    private final TokenManager tokenManager;
     private final ServiceEnum serviceEnum;
 
-    public JwtInterceptor(TokenProvider tokenProvider, ServiceEnum serviceEnum) {
-        this.tokenProvider = tokenProvider;
+    public JwtInterceptor(TokenManager tokenManager, ServiceEnum serviceEnum) {
+        this.tokenManager = tokenManager;
         this.serviceEnum = serviceEnum;
     }
 
 
     @Override
     public void apply(RequestTemplate template) {
-        String token = tokenProvider.getToken(serviceEnum);
+        String token = tokenManager.getToken(serviceEnum);
         if (StringUtils.hasText(token)) {
             template.header("Authorization", "Bearer " + token);
         }
