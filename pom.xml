@@ -1,7 +1,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.flatrock</groupId>
-    <artifactId>delivery-main</artifactId>
+    <artifactId>delivery-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
