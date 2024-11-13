@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/api/**
+        - id: product
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/product/api/**
+        - id: order
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/api/**
+        - id: delivery
+          uri: lb://DELIVERY-SERVICE
+          predicates:
+            - Path=/delivery/api/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+  application:
+    name: gateway-service
+server:
+  port: 5555
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+    register-with-eureka: true
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
