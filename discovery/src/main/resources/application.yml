@@ -10,7 +10,7 @@ eureka:
   server:
     waitTimeInMsWhenSyncEmpty: 0
     enableSelfPreservation: false
-    evictionIntervalTimerInMs: 5000
+    evictionIntervalTimerInMs: 10000
     responseCacheAutoExpirationInSeconds: 0
   instance:
     preferIpAddress: true
